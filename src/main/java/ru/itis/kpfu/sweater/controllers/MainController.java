@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.kpfu.sweater.domains.Message;
 import ru.itis.kpfu.sweater.domains.User;
-import ru.itis.kpfu.sweater.repositories.MessageRepository;
+import ru.itis.kpfu.sweater.services.MessageService;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageService messageService;
 
     @GetMapping("/")
     public String greeting(Map<String,Object> model) {
@@ -25,12 +25,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false) String tag, Map<String, Object> model){
-        Iterable<Message> messages = messageRepository.findAll();
-        if(tag != null && !tag.isEmpty()){
-            messages = messageRepository.findByTag(tag);
-        }else {
-            messages = messageRepository.findAll();
-        }
+        Iterable<Message> messages = messageService.findAll(tag);
         model.put("messages", messages);
         model.put("tag", tag);
         return "main";
@@ -38,12 +33,8 @@ public class MainController {
 
     @PostMapping("/main")
     public String add(@AuthenticationPrincipal User user, @RequestParam String text, @RequestParam String tag, Map<String, Object> model){
-        Message message = new Message();
-        message.setText(text);
-        message.setTag(tag);
-        message.setAuthor(user);
-        messageRepository.save(message);
-        Iterable<Message> messages = messageRepository.findAll();
+        messageService.save(text, tag, user);
+        Iterable<Message> messages = messageService.findAll();
         model.put("messages", messages);
         return "main";
     }

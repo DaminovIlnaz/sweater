@@ -1,9 +1,6 @@
 package ru.itis.kpfu.sweater.domains;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "sweaterMessage")
+@Builder
 public class Message {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
