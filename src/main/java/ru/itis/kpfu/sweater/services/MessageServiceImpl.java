@@ -26,12 +26,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void save(String text, String tag, User user) {
-        Message message = Message.builder()
-                .tag(tag)
-                .text(text)
-                .author(user)
-                .build();
+    public void save(Message message, User user) {
+        message.setAuthor(user);
 
         messageRepository.save(message);
     }

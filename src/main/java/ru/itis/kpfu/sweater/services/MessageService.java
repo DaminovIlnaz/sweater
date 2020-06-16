@@ -7,5 +7,5 @@ public interface MessageService {
     Iterable<Message> findAll(String tag);
     Iterable<Message> findAll();
 
-    void save(String text, String tag, User user);
+    void save(Message message, User user);
 }
