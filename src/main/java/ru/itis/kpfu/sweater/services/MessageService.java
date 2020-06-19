@@ -8,4 +8,5 @@ public interface MessageService {
     Iterable<Message> findAll();
 
     void save(Message message, User user);
+    void save(Message message);
 }

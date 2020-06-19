@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 public class Message {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @NotBlank(message = "Please fill the message")
     @Length(max = 2048, message = "Message too long")
     private String text;
